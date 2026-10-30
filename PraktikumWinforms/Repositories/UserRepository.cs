@@ -47,6 +47,8 @@ namespace PraktikumWinforms.Repositories
             cmd.Parameters.AddWithValue("umur", user.umur);
             cmd.Parameters.AddWithValue("asal", user.asal);
             cmd.ExecuteNonQuery();
+
+
         }
 
 

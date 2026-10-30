@@ -1,14 +1,19 @@
+using PraktikumWinforms;
+
 namespace PraktikumWinForms
 {
     public partial class LoginForm : Form
     {
         private string Username;
         private string Password;
-        public LoginForm()
+        private FormUtama _induk;
+        public LoginForm(FormUtama form)
         {
             InitializeComponent();
             this.Username = "andromok";
             this.Password = "agusandro";
+            this._induk = form;
+
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -23,8 +28,7 @@ namespace PraktikumWinForms
                 MessageBox.Show($"Login Berhasil", "Login Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 FormDashboard dashboard = new FormDashboard();
-                dashboard.Show();
-                this.Hide();
+                _induk.BukaFormDiPanel(dashboard);
                 //dashboard.Show();
 
 

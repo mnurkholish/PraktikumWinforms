@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
 using PraktikumWinforms;
+using PraktikumWinforms.Models;
+using PraktikumWinForms.Database;
 
 namespace PraktikumWinForms
 {
@@ -28,8 +30,8 @@ namespace PraktikumWinForms
         public void loadData()
         {
 
-            List<User> users = dbHelper.GetAllUsers();
-            DgUser.DataSource = users;
+            //List<User> users = dbHelper.GetAllUsers();
+            //DgUser.DataSource = users;
         }
 
         private void btnTambah_Click(object sender, EventArgs e)
@@ -67,8 +69,8 @@ namespace PraktikumWinForms
 
             if (konfirmasi == DialogResult.Yes)
             {
-                dbHelper.DeleteUser(selected.id);
-                loadData();
+                //dbHelper.DeleteUser(selected.id);
+                //loadData();
             }
         }
     }

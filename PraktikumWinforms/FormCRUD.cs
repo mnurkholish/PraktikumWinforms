@@ -1,4 +1,5 @@
-﻿using PraktikumWinForms;
+﻿using PraktikumWinForms.Database;
+using PraktikumWinforms.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,20 +40,20 @@ namespace PraktikumWinforms
             }
 
 
-            if (_user == null) // TAMBAH
-            {
-                User baru = new User(0, txtNama.Text, int.Parse(txtUmur.Text), txtAsal.Text);
-                db.AddUser(baru);
-                MessageBox.Show("User berhasil ditambahkan!");
-            }
-            else // EDIT
-            {
-                _user.nama = txtNama.Text;
-                _user.umur = int.Parse(txtUmur.Text);
-                _user.asal = txtAsal.Text;
-                db.UpdateUser(_user);
-                MessageBox.Show("User berhasil diupdate!");
-            }
+            //if (_user == null) // TAMBAH
+            //{
+            //    User baru = new User(0, txtNama.Text, int.Parse(txtUmur.Text), txtAsal.Text);
+            //    db.AddUser(baru);
+            //    MessageBox.Show("User berhasil ditambahkan!");
+            //}
+            //else // EDIT
+            //{
+            //    _user.nama = txtNama.Text;
+            //    _user.umur = int.Parse(txtUmur.Text);
+            //    _user.asal = txtAsal.Text;
+            //    db.UpdateUser(_user);
+            //    MessageBox.Show("User berhasil diupdate!");
+            //}
 
 
             this.Close();

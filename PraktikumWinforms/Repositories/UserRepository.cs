@@ -1,34 +1,25 @@
-﻿using System;
+﻿using Npgsql;
+using PraktikumWinforms.Models;
+using PraktikumWinForms.Database;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Npgsql;
 
-namespace PraktikumWinForms
+namespace PraktikumWinforms.Repositories
 {
-    public class DatabaseHelper
+    public class UserRepository
     {
-        private string connectionString;
+        DatabaseHelper db;
 
-        public DatabaseHelper()
+        public UserRepository()
         {
-            string host = "localhost";
-            string port = "5432";
-            string db = "db_praktikumwinforms";
-            string username = "postgres";
-            string password = "passwordcuyyy";
-
-            connectionString = $"Host={host};Port={port};Database={db};Username={username};Password={password}";
+            db = new DatabaseHelper();
         }
 
-        public NpgsqlConnection getConnection()
-        {
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            return conn;
-        }
         public List<User> GetAllUsers()
         {
             List<User> list = new List<User>();
-            using var conn = this.getConnection();
+            using var conn = db.getConnection();
             conn.Open();
             using var cmd = new NpgsqlCommand("SELECT id, nama, umur, asal FROM users", conn);
             using var reader = cmd.ExecuteReader();
@@ -48,7 +39,7 @@ namespace PraktikumWinForms
         // CREATE
         public void AddUser(User user)
         {
-            using var conn = this.getConnection();
+            using var conn = db.getConnection();
             conn.Open();
             using var cmd = new NpgsqlCommand(
                 "INSERT INTO users (nama, umur, asal) VALUES (@nama, @umur, @asal)", conn);
@@ -62,7 +53,7 @@ namespace PraktikumWinForms
         // UPDATE
         public void UpdateUser(User user)
         {
-            using var conn = this.getConnection();
+            using var conn = db.getConnection();
             conn.Open();
             using var cmd = new NpgsqlCommand(
                 "UPDATE users SET nama=@nama, umur=@umur, asal=@asal WHERE id=@id", conn);
@@ -77,12 +68,11 @@ namespace PraktikumWinForms
         // DELETE
         public void DeleteUser(int id)
         {
-            using var conn = this.getConnection();
+            using var conn = db.getConnection();
             conn.Open();
             using var cmd = new NpgsqlCommand("DELETE FROM users WHERE id=@id", conn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.ExecuteNonQuery();
         }
-
     }
 }

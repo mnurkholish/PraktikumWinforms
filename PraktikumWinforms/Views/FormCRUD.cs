@@ -7,6 +7,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using PraktikumWinforms.Repositories;
+using PraktikumWinforms.Controllers;
 
 namespace PraktikumWinforms
 {
@@ -14,13 +16,16 @@ namespace PraktikumWinforms
     {
         private DatabaseHelper db;
         private User _user; // null jika mode tambah
+        private UserRepository userRepository;
+        private UserController userController; 
 
         public FormCRUD(User user)
         {
             InitializeComponent();
             _user = user;
             db = new DatabaseHelper();
-
+            userRepository = new UserRepository();
+            userController = new UserController(userRepository);
             if (_user != null) // mode EDIT, isi field dengan data lama
             {
                 txtNama.Text = _user.nama;
@@ -40,20 +45,21 @@ namespace PraktikumWinforms
             }
 
 
-            //if (_user == null) // TAMBAH
-            //{
-            //    User baru = new User(0, txtNama.Text, int.Parse(txtUmur.Text), txtAsal.Text);
-            //    db.AddUser(baru);
-            //    MessageBox.Show("User berhasil ditambahkan!");
-            //}
-            //else // EDIT
-            //{
-            //    _user.nama = txtNama.Text;
-            //    _user.umur = int.Parse(txtUmur.Text);
-            //    _user.asal = txtAsal.Text;
-            //    db.UpdateUser(_user);
-            //    MessageBox.Show("User berhasil diupdate!");
-            //}
+            if (_user == null) // TAMBAH
+            {
+       
+                userController.AddUser(txtNama.Text, txtUmur.Text, txtAsal.Text);
+                MessageBox.Show("User berhasil ditambahkan!");
+            }
+            else // EDIT
+            {
+                _user.nama = txtNama.Text;
+                _user.umur = int.Parse(txtUmur.Text);
+                _user.asal = txtAsal.Text;
+
+                userController.UpdateUser(_user.id, txtNama.Text, txtUmur.Text, txtAsal.Text);
+                MessageBox.Show("User berhasil diupdate!");
+            }
 
 
             this.Close();

@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
 using PraktikumWinforms;
+using PraktikumWinforms.Controllers;
 using PraktikumWinforms.Models;
+using PraktikumWinforms.Repositories;
 using PraktikumWinForms.Database;
 
 namespace PraktikumWinForms
@@ -18,20 +20,23 @@ namespace PraktikumWinForms
     public partial class FormDashboard : Form
     {
         //private List<User> users;
-        public DatabaseHelper dbHelper;
+
+        private UserController userController;
+        private UserRepository userRepository;
         public User user;
         public FormDashboard()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            userRepository = new UserRepository();
+            userController = new UserController(userRepository);
             loadData();
         }
 
         public void loadData()
         {
 
-            //List<User> users = dbHelper.GetAllUsers();
-            //DgUser.DataSource = users;
+            List<User> users = userController.GetUser();
+            DgUser.DataSource = users;
         }
 
         private void btnTambah_Click(object sender, EventArgs e)
@@ -69,8 +74,9 @@ namespace PraktikumWinForms
 
             if (konfirmasi == DialogResult.Yes)
             {
+                userController.DeleteUser(selected.id);
                 //dbHelper.DeleteUser(selected.id);
-                //loadData();
+                loadData();
             }
         }
     }
